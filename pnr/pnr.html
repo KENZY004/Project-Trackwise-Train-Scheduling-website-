@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PNR Status | Trackwise</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="dark-mode.css">
+  <link rel="stylesheet" href="home.css">
+  <style>
+    :root {
+      --primary: #00B8A9;
+      --primary-light: #5CD6CC;
+      --secondary: #2D4059;
+      --accent1: #FF7043;
+      --accent2: #5C6BC0;
+      --accent3: #26A69A;
+      --light: #F5F5F5;
+      --dark: #333;
+      --gray: #777;
+      --success: #4CAF50;
+      --warning: #FFC107;
+      --danger: #F44336;
+      --text-light: #e6e6ff;
+      --text-dark: #2D4059;
+      --bg-light: #f0f8ff;
+      --bg-dark: #1a1a2e;
+      --card-bg-light: #ffffff;
+      --card-bg-dark: #16213e;
+      --header-bg-dark: rgba(26, 26, 46, 0.95);
+      --header-bg-light: rgba(255, 255, 255, 0.95);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode body {
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+    }
+    
+    /* Header Styles - Matching Contact Page */
+    header {
+      background-color: var(--header-bg-light);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 2px solid var(--primary);
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode header {
+      background-color: var(--header-bg-dark);
+      border-bottom-color: var(--primary);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 0;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    
+    .logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--secondary);
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode .logo-text {
+      color: var(--text-light);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 25px;
+    }
+    
+    nav ul li a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode nav ul li a {
+      color: var(--text-light);
+    }
+    
+    nav ul li a:hover, nav ul li a.active {
+      color: var(--primary);
+    }
+
+    .dark-mode nav ul li a:hover, nav ul li a.active {
+      color: #7f5af0;
+    }
+    
+    nav ul li a i {
+      font-size: 0.9rem;
+    }
+    
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+      margin: 0 20px;
+    }
+    
+    .search-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+    
+    .search-box input {
+      padding: 10px 15px 10px 40px;
+      border-radius: 30px;
+      border: 1px solid #ddd;
+      width: 100%;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode .search-box input {
+      background-color: #1e1e3a;
+      color: var(--text-light);
+      border-color: #3d3d6e;
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(85, 29, 89, 0.2);
+    }
+
+    .dark-mode search-box input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(188, 84, 233, 0.2);
+    }
+    
+    .sign-up-btn {
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      margin-left: auto;
+    }
+    
+    .sign-up-btn:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .dark-mode .sign-up-btn {
+      background-color: #7f5af0;
+      color: white;
+    }
+    
+    /* Dark Mode Toggle Styles - Matching Contact Page */
+    .theme-toggle-container {
+      margin-left: 15px;
+    }
+    
+    .dark-mode-toggle {
+      background: transparent;
+      border: none;
+      color: var(--primary);
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 5px;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode-toggle:hover {
+      background-color: rgba(0, 184, 169, 0.1);
+    }
+    
+    .dark-mode .dark-mode-toggle {
+      color: #7f5af0;
+    }
+    
+    .dark-mode .dark-mode-toggle:hover {
+      background-color: rgba(92, 214, 204, 0.1);
+    }
+    
+    .dark-mode-toggle .light-icon {
+      display: inline-block;
+      color: #2cb67d;;
+    }
+    
+    .dark-mode-toggle .dark-icon {
+      display: none;
+      color: var(--accent1);
+    }
+    
+    .dark-mode .dark-mode-toggle .light-icon {
+      display: none;
+    }
+    
+    .dark-mode .dark-mode-toggle .dark-icon {
+      display: inline-block;
+    }
+    
+    /* Main Content Styles */
+    .pnr-container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    
+    h1 {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .dark-mode h1 {
+      color: #7f5af0;
+    }
+    
+    .card {
+      background: var(--card-bg-light);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .dark-mode .card {
+      background: var(--dark);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border-color: rgba(255,255,255,0.1);
+    }
+    
+    .input-group {
+      margin-bottom: 20px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .dark-mode .input-group label {
+      color: #7f5af0;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background-color: var(--card-bg-light);
+      color: var(--text-dark);
+    }
+    
+    .dark-mode .input-group input {
+      background-color: #1e1e3a;
+      border-color: #3d3d6e;
+      color: var(--text-light);
+    }
+    
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--card-bg-dark);
+    }
+    
+    .dark-mode .input-group input:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(92, 214, 204, 0.3);
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 25px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    
+    .dark-mode .btn {
+      background-color: #7f5af0;
+    }
+    
+    .btn:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .dark-mode .btn:hover {
+      background-color: #7f5af0;
+    }
+    
+    .result-card {
+      background: var(--card-bg-light);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: none;
+      animation: fadeIn 0.5s ease;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .dark-mode .result-card {
+      background: var(--card-bg-dark);
+      box-shadow: 0 4px 12px #7f5af0;
+      border-color: rgba(255,255,255,0.1);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .result-card h3 {
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .dark-mode .result-card h3 {
+      color: var(--primary-light);
+      border-bottom-color: #2a3a5e;
+    }
+    
+    .result-card p {
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      color: var(--text-dark);
+    }
+    
+    .dark-mode .result-card p {
+      color: var(--text-light);
+    }
+    
+    .result-card strong {
+      color: var(--primary);
+      min-width: 120px;
+      display: inline-block;
+    }
+    
+    .dark-mode .result-card strong {
+      color: var(--primary-light);
+    }
+    
+    .status-confirmed {
+      color: var(--success);
+      font-weight: 600;
+    }
+    
+    .status-waiting {
+      color: var(--warning);
+      font-weight: 600;
+    }
+    
+    .status-cancelled {
+      color: var(--danger);
+      font-weight: 600;
+    }
+    
+    .spinner {
+      display: none;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Footer Styles - Matching Contact Page */
+    footer {
+      background-color: var(--light);
+      color: var(--dark);
+      padding: 60px 0 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode footer {
+      background-color: #1a1a1a;
+      color: var(--text-light);
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-column h3 {
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      color: var(--secondary);
+      position: relative;
+      padding-bottom: 10px;
+    }
+    
+    .dark-mode .footer-column h3 {
+      color: var(--text-light);
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 2px;
+      background-color: var(--primary);
+    }
+    
+    .footer-column p {
+      margin-bottom: 20px;
+      color: var(--gray);
+    }
+    
+    .dark-mode .footer-column p {
+      color: #b0b0d0;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+      color: var(--secondary);
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode .social-links a {
+      background-color: #2d2d4d;
+      color: var(--text-light);
+    }
+    
+    .social-links a:hover {
+      background-color: var(--primary);
+      color: white;
+      transform: translateY(-3px);
+    }
+    
+    .footer-column ul {
+      list-style: none;
+    }
+    
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+    
+    .footer-column ul li a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .dark-mode .footer-column ul li a {
+      color: #b0b0d0;
+    }
+    
+    .footer-column ul li a:hover {
+      color: var(--primary);
+      padding-left: 5px;
+    }
+    
+    .footer-column ul li a i {
+      font-size: 0.8rem;
+      color: var(--primary);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #ddd;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+    
+    .dark-mode .copyright {
+      border-top-color: #3d3d3d;
+      color: #b0b0d0;
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background-color: var(--primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    /* Toggle Animation */
+    .toggle-animate {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Responsive Styles - Matching Contact Page */
+    @media (max-width: 1200px) {
+      .search-box {
+        order: 3;
+        width: 100%;
+        margin: 15px 0 0;
+      }
+      
+      .search-box input {
+        width: 100%;
+      }
+      
+      .sign-up-btn {
+        margin-left: auto;
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .header-content {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+      
+      nav {
+        order: 1;
+        width: auto;
+        margin-top: 0;
+      }
+      
+      .search-box {
+        order: 2;
+        margin: 0;
+        flex: 1;
+        min-width: 200px;
+      }
+      
+      .theme-toggle-container {
+        margin-left: auto;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .header-content {
+        gap: 10px;
+      }
+      
+      nav ul li {
+        margin-left: 10px;
+      }
+      
+      nav ul li a {
+        font-size: 0.9rem;
+      }
+      
+      .logo-text {
+        font-size: 1.2rem;
+      }
+      
+      .pnr-container {
+        margin: 20px auto;
+        padding: 15px;
+      }
+      
+      .card, .result-card {
+        padding: 20px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .header-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      
+      .logo {
+        order: 1;
+      }
+      
+      nav {
+        order: 3;
+        width: 100%;
+        margin-top: 15px;
+      }
+      
+      nav ul {
+        justify-content: space-between;
+      }
+      
+      .search-box {
+        order: 2;
+        flex: none;
+        width: calc(100% - 120px);
+        margin: 0;
+      }
+      
+      .sign-up-btn {
+        order: 4;
+        margin-left: 0;
+      }
+      
+      .theme-toggle-container {
+        order: 5;
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Matching Contact Page -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="home.html" class="logo">
+          <img src="train.png" alt="Trackwise Logo">
+          <span class="logo-text">Trackwise</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="discoverviolet.html"><i class="fas fa-compass"></i> Discover</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+          </ul>
+        </nav>
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search trains or stations...">
+        </div>
+        <a href="#" class="sign-up-btn"><i class="fas fa-user-plus"></i> Sign up</a>
+        <div class="theme-toggle-container">
+          <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+            <span class="toggle-icon">
+              <i class="fas fa-moon light-icon"></i>
+              <i class="fas fa-sun dark-icon"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main PNR Content -->
+  <div class="pnr-container">
+    <h1><i class="fas fa-search"></i> PNR Status Check</h1>
+    
+    <div class="card">
+      <div class="input-group">
+        <label for="pnrInput">Enter 10-digit PNR Number</label>
+        <input type="text" id="pnrInput" placeholder="e.g., 1234567890" maxlength="10" pattern="[0-9]{10}" required>
+      </div>
+      <button id="checkPnrBtn" class="btn">
+        <i class="fas fa-check-circle"></i> Check Status
+        <div class="spinner" id="loadingSpinner"></div>
+      </button>
+    </div>
+
+    <div id="pnrResult" class="result-card">
+      <h3><i class="fas fa-ticket-alt"></i> PNR: <span id="pnrNumber"></span></h3>
+      <p><strong>Train:</strong> <span id="trainInfo"></span></p>
+      <p><strong>Route:</strong> <span id="routeInfo"></span></p>
+      <p><strong>Journey Date:</strong> <span id="journeyDate"></span></p>
+      <p><strong>Class:</strong> <span id="coachClass"></span></p>
+      <p><strong>Seat/Berth:</strong> <span id="seatBerth"></span></p>
+      <p><strong>Status:</strong> <span id="bookingStatus"></span></p>
+      <p><strong>Chart Status:</strong> <span id="chartStatus"></span></p>
+    </div>
+  </div>
+
+  <!-- Footer Matching Contact Page -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Trackwise</h3>
+          <p>Making rail travel easier and more predictable across India with our advanced scheduling and forecasting technology.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="home.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+            <li><a href="discoverviolet.html"><i class="fas fa-chevron-right"></i> Discover</a></li>
+            <li><a href="about.html"><i class="fas fa-chevron-right"></i> Book Tickets</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> PNR Status</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Train Schedule</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Information</h3>
+          <ul>
+            <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
+            <li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> Terms of Service</a></li>
+            <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul>
+            <li><a href="#"><i class="fas fa-map-marker-alt"></i> 123 Railway Nagar, New Delhi, India</a></li>
+            <li><a href="mailto:info@trackwise.com"><i class="fas fa-envelope"></i> info@trackwise.com</a></li>
+            <li><a href="tel:+911234567890"><i class="fas fa-phone"></i> +91 12345 67890</a></li>
+            <li><a href="#"><i class="fas fa-clock"></i> 24/7 Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        &copy; 2023 Trackwise. All rights reserved. | Designed with <i class="fas fa-heart" style="color: #ff4757;"></i> for train travelers
+      </div>
+    </div>
+  </footer>
+  
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <script>
+    document.getElementById('checkPnrBtn').addEventListener('click', function() {
+      const pnrInput = document.getElementById('pnrInput').value.trim();
+      const btn = document.getElementById('checkPnrBtn');
+      const spinner = document.getElementById('loadingSpinner');
+      
+      // Validate PNR
+      if (!pnrInput || !/^\d{10}$/.test(pnrInput)) {
+        alert('Please enter a valid 10-digit PNR number');
+        return;
+      }
+      
+      // Show loading state
+      btn.disabled = true;
+      spinner.style.display = 'block';
+      btn.querySelector('i').style.display = 'none';
+      
+      // Simulate API call with timeout
+      setTimeout(() => {
+        try {
+          // Generate mock data based on PNR
+          const statusTypes = ['Confirmed', 'Waitlisted', 'RAC', 'Cancelled'];
+          const randomStatus = statusTypes[Math.floor(Math.random() * statusTypes.length)];
+          const chartStatus = Math.random() > 0.5 ? 'Prepared' : 'Not Prepared';
+          
+          // Update UI with results
+          document.getElementById('pnrNumber').textContent = pnrInput;
+          document.getElementById('trainInfo').textContent = `12${pnrInput.slice(0,3)} ${getRandomTrainName()}`;
+          document.getElementById('routeInfo').textContent = `${getRandomStation()} to ${getRandomStation()}`;
+          document.getElementById('journeyDate').textContent = formatDate(new Date(Date.now() + Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000));
+          document.getElementById('coachClass').textContent = getRandomCoachClass();
+          document.getElementById('seatBerth').textContent = randomStatus === 'Confirmed' ? 
+            `B${Math.floor(Math.random() * 10) + 1}/${Math.floor(Math.random() * 70) + 1} (${['Lower', 'Middle', 'Upper', 'Side Lower', 'Side Upper'][Math.floor(Math.random() * 5)]})` : 
+            '--';
+          
+          // Set status with appropriate class
+          const statusElement = document.getElementById('bookingStatus');
+          statusElement.textContent = randomStatus;
+          statusElement.className = `status-${randomStatus.toLowerCase()}`;
+          
+          document.getElementById('chartStatus').textContent = chartStatus;
+          document.getElementById('chartStatus').className = chartStatus === 'Prepared' ? 'status-confirmed' : 'status-waiting';
+          
+          // Show result card
+          document.getElementById('pnrResult').style.display = 'block';
+          
+        } catch (error) {
+          console.error('Error checking PNR:', error);
+          alert('Error checking PNR status. Please try again.');
+        } finally {
+          // Reset button state
+          btn.disabled = false;
+          spinner.style.display = 'none';
+          btn.querySelector('i').style.display = 'inline-block';
+        }
+      }, 1500);
+    });
+    
+    // Helper functions
+    function getRandomTrainName() {
+      const names = [
+        'Rajdhani Express',
+        'Shatabdi Express',
+        'Duronto Express',
+        'Garib Rath',
+        'Sampark Kranti',
+        'Jan Shatabdi',
+        'Vande Bharat',
+        'Gatimaan Express'
+      ];
+      return names[Math.floor(Math.random() * names.length)];
+    }
+    
+    function getRandomStation() {
+      const stations = [
+        'New Delhi (NDLS)',
+        'Mumbai CST (CSTM)',
+        'Chennai Central (MAS)',
+        'Howrah Junction (HWH)',
+        'Bangalore City (SBC)',
+        'Secunderabad Junction (SC)',
+        'Ahmedabad Junction (ADI)',
+        'Patna Junction (PNBE)'
+      ];
+      return stations[Math.floor(Math.random() * stations.length)];
+    }
+    
+    function getRandomCoachClass() {
+      const classes = [
+        'Sleeper (SL)',
+        'AC 3 Tier (3A)',
+        'AC 2 Tier (2A)',
+        'AC First Class (1A)',
+        'Second Sitting (2S)',
+        'Executive Class (EC)'
+      ];
+      return classes[Math.floor(Math.random() * classes.length)];
+    }
+    
+    function formatDate(date) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString('en-US', options);
+    }
+
+    // Dark Mode Toggle Functionality - Matching Contact Page
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function applyDarkMode(isDark) {
+      if (isDark) {
+        document.body.classList.add('dark-mode');
+        darkModeToggle.querySelector('.light-icon').style.display = 'none';
+        darkModeToggle.querySelector('.dark-icon').style.display = 'inline-block';
+      } else {
+        document.body.classList.remove('dark-mode');
+        darkModeToggle.querySelector('.light-icon').style.display = 'inline-block';
+        darkModeToggle.querySelector('.dark-icon').style.display = 'none';
+      }
+    }
+
+    function initDarkMode() {
+      const currentTheme = localStorage.getItem('theme');
+      if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+        applyDarkMode(true);
+      } else {
+        applyDarkMode(false);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initDarkMode);
+
+    darkModeToggle.addEventListener('click', function() {
+      const isDarkMode = !document.body.classList.contains('dark-mode');
+      applyDarkMode(isDarkMode);
+      localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+      
+      this.classList.add('toggle-animate');
+      setTimeout(() => {
+        this.classList.remove('toggle-animate');
+      }, 300);
+    });
+
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'theme') {
+        applyDarkMode(event.newValue === 'dark');
+      }
+    });
+
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
+    });
+    
+    backToTopButton.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script>
+</body>
+</html>

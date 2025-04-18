@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!-- Booking Form -->
+<form id="bookingForm">
+    <h2>Book Train Ticket</h2>
+    
+    <div>
+      <label>Train Number:</label>
+      <input type="text" id="trainNumber" required>
+    </div>
+    
+    <div>
+      <label>From Station:</label>
+      <input type="text" id="fromStation" placeholder="e.g., NDLS" required>
+    </div>
+    
+    <div>
+      <label>To Station:</label>
+      <input type="text" id="toStation" placeholder="e.g., CSTM" required>
+    </div>
+    
+    <div>
+      <label>Journey Date:</label>
+      <input type="date" id="journeyDate" required>
+    </div>
+    
+    <div>
+      <label>Coach Type:</label>
+      <select id="coachType">
+        <option value="SL">Sleeper (SL)</option>
+        <option value="3A">AC 3-Tier (3A)</option>
+        <option value="2A">AC 2-Tier (2A)</option>
+      </select>
+    </div>
+    
+    <button type="submit">Book Now</button>
+  </form>
+  
+  <!-- Booking Result (hidden by default) -->
+  <div id="bookingResult" style="display:none;">
+    <h3>Booking Confirmed!</h3>
+    <p>PNR: <span id="pnrNumber"></span></p>
+    <p>Status: <span id="bookingStatus"></span></p>
+  </div>
+  
+  <!-- JavaScript to Handle Form Submission -->
+  <script>
+  document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const bookingData = {
+      user_id: 1, // In real app, get from session
+      train_number: document.getElementById("trainNumber").value,
+      from_station: document.getElementById("fromStation").value,
+      to_station: document.getElementById("toStation").value,
+      journey_date: document.getElementById("journeyDate").value,
+      coach_type: document.getElementById("coachType").value
+    };
+  
+    // Send to PHP backend
+    const response = await fetch("book_ticket.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bookingData)
+    });
+  
+    const result = await response.json();
+  
+    if (result.success) {
+      document.getElementById("pnrNumber").textContent = result.pnr_number;
+      document.getElementById("bookingStatus").textContent = "Confirmed";
+      document.getElementById("bookingResult").style.display = "block";
+      document.getElementById("bookingForm").reset();
+    } else {
+      alert("Error: " + (result.error || "Booking failed"));
+    }
+  });
+  </script>
+  </body>
+  </html>*/
+
+  
