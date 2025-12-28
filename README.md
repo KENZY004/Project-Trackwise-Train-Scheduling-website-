@@ -36,12 +36,16 @@ trackwise/
 └── assets/
 ```
 
+---
+
 ## ⚙️ Running Locally
 ```bash
 git clone https://github.com/KENZY004/Project-Trackwise-Train-Scheduling-website-.git
 cd Project-Trackwise-Train-Scheduling-website-
 
 ```
+
+---
 
 ## 🌐 Live Demo
 🔗 https://track-wise-train-scheduling.vercel.app/
